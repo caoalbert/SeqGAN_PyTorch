@@ -1,6 +1,7 @@
 import torch
 from torch.autograd import Variable
 from math import ceil
+device = torch.device('cuda:1')
 
 def prepare_generator_batch(samples, start_letter=0, gpu=False):
     """
@@ -25,8 +26,8 @@ def prepare_generator_batch(samples, start_letter=0, gpu=False):
     target = Variable(target).type(torch.LongTensor)
 
     if gpu:
-        inp = inp.cuda()
-        target = target.cuda()
+        inp = inp.cuda(device)
+        target = target.cuda(device)
 
     return inp, target
 
@@ -57,8 +58,8 @@ def prepare_discriminator_data(pos_samples, neg_samples, gpu=False):
     target = Variable(target)
 
     if gpu:
-        inp = inp.cuda()
-        target = target.cuda()
+        inp = inp.cuda(device)
+        target = target.cuda(device)
 
     return inp, target
 

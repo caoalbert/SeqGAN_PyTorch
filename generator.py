@@ -6,7 +6,7 @@ import numpy as np
 import pdb
 import math
 import torch.nn.init as init
-
+device = torch.device('cuda:1')
 
 class Generator(nn.Module):
 
@@ -32,7 +32,7 @@ class Generator(nn.Module):
         h = autograd.Variable(torch.zeros(1, batch_size, self.hidden_dim))
 
         if self.gpu:
-            return h.cuda()
+            return h.cuda(device)
         else:
             return h
 
@@ -62,8 +62,8 @@ class Generator(nn.Module):
         inp = autograd.Variable(torch.LongTensor([start_letter]*num_samples))
 
         if self.gpu:
-            samples = samples.cuda()
-            inp = inp.cuda()
+            samples = samples.cuda(device)
+            inp = inp.cuda(device)
 
         for i in range(self.max_seq_len):
             out, h = self.forward(inp, h)               # out: num_samples x vocab_size

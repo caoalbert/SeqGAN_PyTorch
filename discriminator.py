@@ -2,7 +2,7 @@ import torch
 import torch.autograd as autograd
 import torch.nn as nn
 import pdb
-
+device = torch.device('cuda:1')
 class Discriminator(nn.Module):
 
     def __init__(self, embedding_dim, hidden_dim, vocab_size, max_seq_len, gpu=False, dropout=0.2):
@@ -22,7 +22,7 @@ class Discriminator(nn.Module):
         h = autograd.Variable(torch.zeros(2*2*1, batch_size, self.hidden_dim))
 
         if self.gpu:
-            return h.cuda()
+            return h.cuda(device)
         else:
             return h
 
